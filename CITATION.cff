@@ -1,0 +1,11 @@
+cff-version: "1.2.0"
+message: "If you use the SFEDI Business Support Standards, please credit them using the credit line in the README."
+title: SFEDI Business Support Standards
+type: dataset
+authors:
+  - name: Small Firms Enterprise Development Initiative Limited
+version: "1.9"
+date-released: "2026-11-17"
+license: CC-BY-ND-4.0
+url: https://www.sfedi.co.uk/standards
+repository-code: https://github.com/SFEDI-Group/sfedi-business-support-standards

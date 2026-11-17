@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/SFEDI-Group/sfedi-business-support-standards/main/sfedi-business-support-standards.schema.json",
+  "title": "SFEDI Business Support Standards",
+  "description": "The SFEDI Business Support Standards as open data: the Standards, their requirements, the professional behaviours, how the earlier national standards map to them, and how to credit them. Published by SFEDI under CC BY-ND 4.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["about", "framework", "behaviours", "standards", "lineage", "whatsNew"],
+  "properties": {
+    "about": {
+      "description": "Who publishes the Standards, the licence they are published under and the credit line to use.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "publisher", "copyrightHolder", "website", "licence", "creditLine"],
+      "properties": {
+        "name": {
+          "description": "The full name of the Standards.",
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "description": "The organisation that sets and publishes the Standards.",
+          "type": "string",
+          "minLength": 1
+        },
+        "copyrightHolder": {
+          "description": "The organisation that holds the copyright in the Standards.",
+          "type": "string",
+          "minLength": 1
+        },
+        "website": {
+          "description": "Where to read the Standards on the SFEDI website.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://www\\.sfedi\\.co\\.uk/standards$"
+        },
+        "licence": {
+          "description": "The licence the Standards are published under. It covers the Standards, not the SFEDI name or logo.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "url"],
+          "properties": {
+            "name": {
+              "description": "The short name of the licence.",
+              "type": "string",
+              "minLength": 1
+            },
+            "url": {
+              "description": "The address of the licence.",
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://"
+            }
+          }
+        },
+        "creditLine": {
+          "description": "The line to use when you credit the Standards. It names this version and its date.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "framework": {
+      "description": "The Standards as a whole: the version, the date, a description and the introductory sections.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "status",
+        "date",
+        "url",
+        "description",
+        "sections",
+        "coreIntro",
+        "specialistIntro",
+        "informationIntro",
+        "introductionIntro",
+        "behavioursIntro"
+      ],
+      "properties": {
+        "name": {
+          "description": "The full name of the Standards.",
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "description": "The version of the Standards, for example 1.9.",
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        },
+        "status": {
+          "description": "Whether this version is published or a draft.",
+          "enum": ["published", "draft"]
+        },
+        "date": {
+          "description": "The year and month of this version, as YYYY-MM, for example 2026-11.",
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+        },
+        "url": {
+          "description": "The Standards on the SFEDI website.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://www\\.sfedi\\.co\\.uk/standards$"
+        },
+        "description": {
+          "description": "A short description of the Standards.",
+          "type": "string",
+          "minLength": 1
+        },
+        "sections": {
+          "description": "The introductory sections of the Standards, in order. Each is keyed by a short name made from its heading, for example who-they-are-for.",
+          "type": "object",
+          "propertyNames": { "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "additionalProperties": {
+            "description": "One introductory section.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "markdown"],
+            "properties": {
+              "title": {
+                "description": "The section's heading.",
+                "type": "string",
+                "minLength": 1
+              },
+              "markdown": {
+                "description": "The section's text, as Markdown. Links to the SFEDI website are full addresses.",
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "coreIntro": {
+          "description": "The introduction to the Core Standards (C).",
+          "type": "string"
+        },
+        "specialistIntro": {
+          "description": "The introduction to the Specialist Standards (S).",
+          "type": "string"
+        },
+        "informationIntro": {
+          "description": "The introduction to the Business Information Standards (I).",
+          "type": "string"
+        },
+        "introductionIntro": {
+          "description": "The introduction to the Introduction to Business Support Standards (E).",
+          "type": "string"
+        },
+        "behavioursIntro": {
+          "description": "The introduction to the professional behaviours (B).",
+          "type": "string"
+        }
+      }
+    },
+    "behaviours": {
+      "description": "The professional behaviours, which apply to every Standard.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "One professional behaviour.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "url", "order", "text"],
+        "properties": {
+          "code": {
+            "description": "The behaviour's permanent code, for example B1. Codes are never renumbered or reused.",
+            "type": "string",
+            "pattern": "^B[1-9][0-9]*$"
+          },
+          "url": {
+            "description": "The behaviour on the SFEDI website: the professional behaviours page, at this behaviour's anchor.",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://www\\.sfedi\\.co\\.uk/standards/behaviours#b[1-9][0-9]*$"
+          },
+          "order": {
+            "description": "The behaviour's position in the list.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "description": "The behaviour, as plain text.",
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "standards": {
+      "description": "The Standards, in their published order: Core (C), Specialist (S), Business Information (I), then Introduction to Business Support (E).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "One Standard.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "tier",
+          "order",
+          "title",
+          "slug",
+          "url",
+          "whoFor",
+          "evolvedFrom",
+          "summary",
+          "performanceRequirements",
+          "knowledgeRequirements"
+        ],
+        "properties": {
+          "code": {
+            "$ref": "#/$defs/standardCode",
+            "description": "The Standard's permanent code, for example C1 or S3. Codes are never renumbered or reused."
+          },
+          "tier": {
+            "description": "The group the Standard belongs to: core (C), specialist (S), information (I, Business Information) or introduction (E, Introduction to Business Support).",
+            "enum": ["core", "specialist", "information", "introduction"]
+          },
+          "order": {
+            "description": "The Standard's position in the published order, across all four groups.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "description": "The Standard's title, without its code.",
+            "type": "string",
+            "minLength": 1
+          },
+          "slug": {
+            "description": "The last part of the address of the Standard's page on the SFEDI website, made from its code and title.",
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "url": {
+            "description": "The Standard's page on the SFEDI website.",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://www\\.sfedi\\.co\\.uk/standards/[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "whoFor": {
+            "description": "Who the Standard is for, or null where the Standard does not say. The text follows the label \"Who it's for\" in the Standards, so it may start in lower case.",
+            "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+          },
+          "evolvedFrom": {
+            "description": "The earlier SFEDI standards this Standard replaces or draws on, or null. The text follows the label \"Evolved from\" in the Standards, so it may start in lower case.",
+            "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+          },
+          "summary": {
+            "description": "What the Standard is about and who it applies to.",
+            "type": "string",
+            "minLength": 1
+          },
+          "performanceRequirements": {
+            "description": "\"What you need to show\": the performance requirements your practice must meet.",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/requirement",
+              "description": "One performance requirement.",
+              "type": "object",
+              "properties": {
+                "code": {
+                  "description": "A performance requirement's code has a number after the dot, for example S3.4.",
+                  "type": "string",
+                  "pattern": "^[CSIE][1-9][0-9]*\\.[1-9][0-9]*$"
+                },
+                "type": {
+                  "description": "Always performance in this list.",
+                  "const": "performance"
+                }
+              }
+            }
+          },
+          "knowledgeRequirements": {
+            "description": "\"What you need to know and understand\": the knowledge that underpins that practice.",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/requirement",
+              "description": "One knowledge requirement.",
+              "type": "object",
+              "properties": {
+                "code": {
+                  "description": "A knowledge requirement's code has a K and a number after the dot, for example S3.K2.",
+                  "type": "string",
+                  "pattern": "^[CSIE][1-9][0-9]*\\.K[1-9][0-9]*$"
+                },
+                "type": {
+                  "description": "Always knowledge in this list.",
+                  "const": "knowledge"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "lineage": {
+      "description": "How each unit of the earlier national standards maps to the current Standards: the three original suites (2007 to 2010) and the 2013 update.",
+      "type": "array",
+      "items": {
+        "description": "One unit of an earlier suite, and where it is now.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["suite", "year", "unit", "order", "title", "nowIn", "nowInCodes", "url"],
+        "properties": {
+          "suite": {
+            "description": "The suite the unit belonged to: Business Support Standards, Business Information Standards, Introduction to Enterprise Support, or Business and Enterprise Support.",
+            "type": "string",
+            "minLength": 1
+          },
+          "year": {
+            "description": "The year the suite was published.",
+            "type": "integer"
+          },
+          "unit": {
+            "description": "The unit's number within its suite. A unit is identified by its suite and this number together.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "order": {
+            "description": "The unit's position in the lineage tables as published, across all suites.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "description": "The unit's original title.",
+            "type": "string",
+            "minLength": 1
+          },
+          "nowIn": {
+            "description": "Where the unit's content is now, in words. It names Standard codes and may add a note on which part went where.",
+            "type": "string"
+          },
+          "nowInCodes": {
+            "description": "The codes of the Standards named in nowIn.",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/standardCode",
+              "description": "The code of a Standard the unit's content is now in."
+            }
+          },
+          "url": {
+            "description": "The page on the SFEDI website that shows the lineage tables. Every unit links to the same page.",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://www\\.sfedi\\.co\\.uk/standards/how-they-evolved$"
+          }
+        }
+      }
+    },
+    "whatsNew": {
+      "description": "What changed in this edition of the Standards, compared with the earlier national standards.",
+      "type": "array",
+      "items": {
+        "description": "One change, as plain text.",
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "standardCode": {
+      "description": "A Standard's permanent code: C (Core), S (Specialist), I (Business Information) or E (Introduction to Business Support), then a number.",
+      "type": "string",
+      "pattern": "^[CSIE][1-9][0-9]*$"
+    },
+    "requirement": {
+      "description": "One requirement of a Standard.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "url", "type", "group", "order", "text"],
+      "properties": {
+        "code": {
+          "description": "The requirement's permanent code: its Standard's code, a dot, then a number (performance, for example S3.4) or K and a number (knowledge, for example S3.K2). Codes are never renumbered or reused.",
+          "type": "string",
+          "pattern": "^[CSIE][1-9][0-9]*\\.K?[1-9][0-9]*$"
+        },
+        "url": {
+          "description": "The requirement on the SFEDI website: its Standard's page, at this requirement's anchor (S3.4 is #s3-4, S3.K2 is #s3-k2).",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://www\\.sfedi\\.co\\.uk/standards/[a-z0-9]+(-[a-z0-9]+)*#[csie][1-9][0-9]*-k?[1-9][0-9]*$"
+        },
+        "type": {
+          "description": "Whether this is a performance requirement (what you need to show) or a knowledge requirement (what you need to know and understand).",
+          "enum": ["performance", "knowledge"]
+        },
+        "group": {
+          "description": "The sub-heading the requirement sits under in its Standard, or null where the Standard has none.",
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "order": {
+          "description": "The requirement's position in its list as published. It follows the order of the Standard, not the number in the code.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "description": "The requirement, as plain text.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}
